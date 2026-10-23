@@ -1,0 +1,62 @@
+[
+  {
+    "caso": "identificado_correcto",
+    "imagen": "IMG-0016_jpg.rf.e944c7b4ebd5ba73c50cae66e0cf732b.jpg",
+    "especie_real": "Styracura_schmardae",
+    "respuesta": {
+      "id_observacion": "IMG-0016_jpg.rf.e944c7b4ebd5ba73c50cae66e0cf732b",
+      "especie_propuesta": "Styracura_schmardae",
+      "confianza": 0.8206,
+      "umbral_minimo": 0.7,
+      "estado": "identificado"
+    }
+  },
+  {
+    "caso": "no_concluyente_hubiera_acertado",
+    "imagen": "IMG-0059_jpg.rf.89004051525fff9c7be854b04316b318.jpg",
+    "especie_real": "Hypanus_guttatus",
+    "respuesta": {
+      "id_observacion": "IMG-0059_jpg.rf.89004051525fff9c7be854b04316b318",
+      "especie_propuesta": "Hypanus_guttatus",
+      "confianza": 0.2617,
+      "umbral_minimo": 0.7,
+      "estado": "no_concluyente"
+    }
+  },
+  {
+    "caso": "no_concluyente_hubiera_fallado",
+    "imagen": "IMG-0138_jpeg.rf.db2c9d36f91d721e8a52fb26be472fd7.jpg",
+    "especie_real": "Styracura_schmardae",
+    "respuesta": {
+      "id_observacion": "IMG-0138_jpeg.rf.db2c9d36f91d721e8a52fb26be472fd7",
+      "especie_propuesta": "Hypanus_guttatus",
+      "confianza": 0.589,
+      "umbral_minimo": 0.7,
+      "estado": "no_concluyente"
+    }
+  },
+  {
+    "caso": "no_concluyente_sin_deteccion",
+    "imagen": "IMG-0241_jpg.rf.f828db035c6556291abad22883b14f72.jpg",
+    "especie_real": "Aetobatus_narinari",
+    "respuesta": {
+      "id_observacion": "IMG-0241_jpg.rf.f828db035c6556291abad22883b14f72",
+      "especie_propuesta": null,
+      "confianza": 0.0,
+      "umbral_minimo": 0.7,
+      "estado": "no_concluyente"
+    }
+  },
+  {
+    "caso": "identificado_INCORRECTO",
+    "imagen": "IMG-0274_jpg.rf.248d1736d02e3998562073986984c9f6.jpg",
+    "especie_real": "Potamotrygon_magdalenae",
+    "respuesta": {
+      "id_observacion": "IMG-0274_jpg.rf.248d1736d02e3998562073986984c9f6",
+      "especie_propuesta": "Aetobatus_narinari",
+      "confianza": 0.8967,
+      "umbral_minimo": 0.7,
+      "estado": "identificado"
+    }
+  }
+]

@@ -1,0 +1,236 @@
+{
+  "nombre": "identimar-rayas-yolov8n",
+  "fecha_congelado_utc": "2026-10-14 23:46",
+  "arquitectura": "yolov8n.pt",
+  "clases": {
+    "0": "Aetobatus_narinari",
+    "1": "Hypanus_guttatus",
+    "2": "Potamotrygon_magdalenae",
+    "3": "Styracura_schmardae"
+  },
+  "pesos": {
+    "archivo": "pesos/best.pt",
+    "sha256": "d35ef9c336694abc828d85aefd4e8c8b87fdb213b4527c429d70e398c3abfb92",
+    "tamano_mb": 6.26
+  },
+  "entrenamiento": {
+    "corrida": "/content/runs/detect/identimar/baseline_n",
+    "mejor_epoca": 93,
+    "epocas_ejecutadas": 100,
+    "hiperparametros": {
+      "model": "yolov8n.pt",
+      "data": "/content/IdentiMar-Rayas-2/data.yaml",
+      "epochs": 100,
+      "patience": 20,
+      "batch": 16,
+      "imgsz": 640,
+      "seed": 0,
+      "deterministic": true,
+      "optimizer": "auto",
+      "lr0": 0.01,
+      "lrf": 0.01,
+      "momentum": 0.937,
+      "weight_decay": 0.0005,
+      "warmup_epochs": 3.0,
+      "hsv_h": 0.015,
+      "hsv_s": 0.7,
+      "hsv_v": 0.4,
+      "degrees": 0.0,
+      "translate": 0.1,
+      "scale": 0.5,
+      "shear": 0.0,
+      "fliplr": 0.5,
+      "flipud": 0.0,
+      "mosaic": 1.0,
+      "mixup": 0.0,
+      "close_mosaic": 10,
+      "amp": true,
+      "pretrained": true
+    }
+  },
+  "dataset": {
+    "carpeta": "IdentiMar-Rayas-2",
+    "version_roboflow_deducida_del_nombre": "2",
+    "auditoria": {
+      "train": {
+        "particion": "train",
+        "imagenes": 876,
+        "imagenes_por_clase": {
+          "Aetobatus_narinari": 168,
+          "Hypanus_guttatus": 168,
+          "Potamotrygon_magdalenae": 372,
+          "Styracura_schmardae": 168
+        },
+        "instancias_por_clase": {
+          "Aetobatus_narinari": 180,
+          "Hypanus_guttatus": 174,
+          "Potamotrygon_magdalenae": 660,
+          "Styracura_schmardae": 180
+        },
+        "copias_dup": 279,
+        "copias_dup_anidadas": 0
+      },
+      "valid": {
+        "particion": "valid",
+        "imagenes": 58,
+        "imagenes_por_clase": {
+          "Aetobatus_narinari": 16,
+          "Hypanus_guttatus": 17,
+          "Potamotrygon_magdalenae": 9,
+          "Styracura_schmardae": 16
+        },
+        "instancias_por_clase": {
+          "Aetobatus_narinari": 16,
+          "Hypanus_guttatus": 18,
+          "Potamotrygon_magdalenae": 9,
+          "Styracura_schmardae": 16
+        },
+        "copias_dup": 0,
+        "copias_dup_anidadas": 0
+      },
+      "test": {
+        "particion": "test",
+        "imagenes": 29,
+        "imagenes_por_clase": {
+          "Aetobatus_narinari": 8,
+          "Hypanus_guttatus": 8,
+          "Potamotrygon_magdalenae": 5,
+          "Styracura_schmardae": 8
+        },
+        "instancias_por_clase": {
+          "Aetobatus_narinari": 8,
+          "Hypanus_guttatus": 8,
+          "Potamotrygon_magdalenae": 5,
+          "Styracura_schmardae": 8
+        },
+        "copias_dup": 0,
+        "copias_dup_anidadas": 0
+      }
+    }
+  },
+  "contrato": {
+    "umbral_no_concluyente": 0.7,
+    "conf_predict": 0.25,
+    "campos": [
+      "id_observacion",
+      "especie_propuesta",
+      "confianza",
+      "umbral_minimo",
+      "estado"
+    ]
+  },
+  "metricas": {
+    "test": [
+      {
+        "Clase": "Aetobatus_narinari",
+        "Imágenes": 8,
+        "Instancias": 8,
+        "Precisión": 0.74105,
+        "Recall": 0.875,
+        "F1": 0.80248,
+        "mAP50": 0.875,
+        "mAP50-95": 0.72225
+      },
+      {
+        "Clase": "Hypanus_guttatus",
+        "Imágenes": 8,
+        "Instancias": 8,
+        "Precisión": 0.8467,
+        "Recall": 1.0,
+        "F1": 0.91698,
+        "mAP50": 0.96722,
+        "mAP50-95": 0.74919
+      },
+      {
+        "Clase": "Potamotrygon_magdalenae",
+        "Imágenes": 5,
+        "Instancias": 5,
+        "Precisión": 0.82461,
+        "Recall": 0.94765,
+        "F1": 0.88186,
+        "mAP50": 0.96167,
+        "mAP50-95": 0.69289
+      },
+      {
+        "Clase": "Styracura_schmardae",
+        "Imágenes": 8,
+        "Instancias": 8,
+        "Precisión": 0.9775,
+        "Recall": 1.0,
+        "F1": 0.98862,
+        "mAP50": 0.995,
+        "mAP50-95": 0.87033
+      },
+      {
+        "Clase": "Promedio (macro)",
+        "Imágenes": "—",
+        "Instancias": 29,
+        "Precisión": 0.847465,
+        "Recall": 0.9556625,
+        "F1": 0.897485,
+        "mAP50": 0.9497225,
+        "mAP50-95": 0.7586649999999999
+      }
+    ],
+    "valid": [
+      {
+        "Clase": "Aetobatus_narinari",
+        "Imágenes": 16,
+        "Instancias": 16,
+        "Precisión": 0.93935,
+        "Recall": 0.96899,
+        "F1": 0.95394,
+        "mAP50": 0.98441,
+        "mAP50-95": 0.70631
+      },
+      {
+        "Clase": "Hypanus_guttatus",
+        "Imágenes": 17,
+        "Instancias": 18,
+        "Precisión": 0.86623,
+        "Recall": 0.71965,
+        "F1": 0.78616,
+        "mAP50": 0.83521,
+        "mAP50-95": 0.54529
+      },
+      {
+        "Clase": "Potamotrygon_magdalenae",
+        "Imágenes": 9,
+        "Instancias": 9,
+        "Precisión": 0.67869,
+        "Recall": 0.55556,
+        "F1": 0.61098,
+        "mAP50": 0.566,
+        "mAP50-95": 0.40027
+      },
+      {
+        "Clase": "Styracura_schmardae",
+        "Imágenes": 16,
+        "Instancias": 16,
+        "Precisión": 0.87639,
+        "Recall": 0.875,
+        "F1": 0.87569,
+        "mAP50": 0.94981,
+        "mAP50-95": 0.73854
+      },
+      {
+        "Clase": "Promedio (macro)",
+        "Imágenes": "—",
+        "Instancias": 59,
+        "Precisión": 0.840165,
+        "Recall": 0.7798,
+        "F1": 0.8066925,
+        "mAP50": 0.8338574999999999,
+        "mAP50-95": 0.5976025
+      }
+    ]
+  },
+  "entorno": {
+    "python": "3.13.15",
+    "so": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "ultralytics": "8.4.170",
+    "torch": "2.11.0+cu130",
+    "roboflow": "1.7.1",
+    "numpy": "2.1.3"
+  }
+}

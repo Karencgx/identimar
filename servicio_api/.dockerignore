@@ -1,0 +1,10 @@
+tests
+scripts
+feedback
+.git
+.env
+__pycache__
+*.pyc
+.pytest_cache
+openapi.json
+README.md

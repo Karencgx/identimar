@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+*.zip
+tests/
+scripts/
+feedback/
+openapi.json
+__pycache__/
+*.pyc
+.pytest_cache/

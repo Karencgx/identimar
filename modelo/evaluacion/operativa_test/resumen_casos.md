@@ -1,0 +1,7 @@
+| Caso | Imágenes | % |
+|---|---|---|
+| identificado_INCORRECTO | 1 | 3.4 |
+| identificado_correcto | 21 | 72.4 |
+| no_concluyente_hubiera_acertado | 4 | 13.8 |
+| no_concluyente_hubiera_fallado | 2 | 6.9 |
+| no_concluyente_sin_deteccion | 1 | 3.4 |

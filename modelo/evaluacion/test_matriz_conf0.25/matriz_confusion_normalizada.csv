@@ -1,0 +1,6 @@
+predicho \ real,Aetobatus_narinari,Hypanus_guttatus,Potamotrygon_magdalenae,Styracura_schmardae,background
+Aetobatus_narinari,0.875,0.000,0.000,0.000,0.400
+Hypanus_guttatus,0.000,1.000,0.000,0.125,0.200
+Potamotrygon_magdalenae,0.000,0.000,1.000,0.000,0.200
+Styracura_schmardae,0.000,0.000,0.000,0.875,0.200
+background,0.125,0.000,0.000,0.000,0.000

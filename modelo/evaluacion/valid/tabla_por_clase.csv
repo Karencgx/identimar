@@ -1,0 +1,6 @@
+Clase,Imágenes,Instancias,Precisión,Recall,F1,mAP50,mAP50-95
+Aetobatus_narinari,16,16,0.9394,0.969,0.9539,0.9844,0.7063
+Hypanus_guttatus,17,18,0.8662,0.7197,0.7862,0.8352,0.5453
+Potamotrygon_magdalenae,9,9,0.6787,0.5556,0.611,0.566,0.4003
+Styracura_schmardae,16,16,0.8764,0.875,0.8757,0.9498,0.7385
+Promedio (macro),—,59,0.8402,0.7798,0.8067,0.8339,0.5976

@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+feedback/*
+!feedback/.gitkeep
+!models/.gitkeep
+
+# El repositorio es PRIVADO: best.pt (unos 6 MB) SÍ se versiona para poder reconstruir el servicio con `git clone`.
+# Si el repositorio se hace público, descomente la línea siguiente y publique los pesos como archivo de una Release:
+# models/*.pt

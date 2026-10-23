@@ -1,0 +1,627 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "IdentiMar — Módulo de visión artificial",
+    "description": "\nServicio de identificación de rayas del Urabá antioqueño (YOLOv8).\n\n**Contrato de salida** de `/predict` (JSON): `id_observacion`, `especie_propuesta`, `confianza`,\n`umbral_minimo` y `estado` (`identificado` | `no_concluyente`). Cuando la confianza es menor al umbral,\nel estado es `no_concluyente` y el backend deriva la observación a revisión por un experto.\nSi el modelo no detecta ninguna raya, `especie_propuesta` es `null`, `confianza` es 0 y el estado es `no_concluyente`.\n\nEl tiempo de inferencia de cada petición viaja en el encabezado `X-Tiempo-Inferencia-ms`\n(no en el cuerpo, para no alterar el contrato).\n",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Estado del servicio",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/predict": {
+      "post": {
+        "summary": "Identificar la raya de una imagen enviada como archivo",
+        "operationId": "predict_predict_post",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_predict_predict_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaIdentificacion"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Imagen inválida o id_observacion inválido"
+          },
+          "401": {
+            "description": "API key inválida"
+          },
+          "413": {
+            "description": "Imagen demasiado grande"
+          },
+          "503": {
+            "description": "Modelo no cargado"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/predict/url": {
+      "post": {
+        "summary": "Identificar la raya de una imagen referenciada por URL (opcional)",
+        "description": "Deshabilitado salvo que se configure `ALLOWED_IMAGE_HOSTS` (hosts de almacenamiento permitidos).",
+        "operationId": "predict_url_predict_url_post",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeticionUrl"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaIdentificacion"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Host no permitido"
+          },
+          "501": {
+            "description": "Función deshabilitada"
+          },
+          "502": {
+            "description": "El almacenamiento no respondió bien"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/predict/visual": {
+      "post": {
+        "summary": "Imagen con las detecciones dibujadas (demostración)",
+        "description": "Devuelve un JPEG con las cajas, la especie y la confianza. El resultado del contrato viaja en el encabezado `X-Resultado` (JSON).",
+        "operationId": "predict_visual_predict_visual_post",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_predict_visual_predict_visual_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              },
+              "image/jpeg": {}
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/especies": {
+      "get": {
+        "summary": "Catálogo de especies que reconoce el modelo",
+        "description": "Úselo para armonizar nombres científicos y códigos con el backend y la app.",
+        "operationId": "especies_especies_get",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feedback": {
+      "post": {
+        "summary": "Ingresar una observación validada por un experto (realimentación del dataset)",
+        "description": "Guarda la imagen y una etiqueta YOLO con la especie confirmada. La caja sale del modelo y debe revisarse antes de reentrenar (`requiere_revision_caja`).",
+        "operationId": "feedback_feedback_post",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Api-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_feedback_feedback_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaFeedback"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Especie o imagen inválida"
+          },
+          "409": {
+            "description": "Imagen ya ingresada"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feedback/export": {
+      "get": {
+        "summary": "Descargar todo el feedback almacenado (zip)",
+        "description": "Devuelve images/, labels/ y metadata.jsonl. Úselo para respaldar los datos si el disco del servidor no es persistente.",
+        "operationId": "feedback_export_feedback_export_get",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Api-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              },
+              "application/zip": {}
+            }
+          },
+          "404": {
+            "description": "Aún no hay observaciones"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_feedback_feedback_post": {
+        "properties": {
+          "id_observacion": {
+            "type": "string",
+            "title": "Id Observacion"
+          },
+          "especie_confirmada": {
+            "type": "string",
+            "title": "Especie Confirmada",
+            "description": "Clase confirmada por el experto, p. ej. Hypanus_guttatus."
+          },
+          "validado_por": {
+            "type": "string",
+            "title": "Validado Por",
+            "description": "Nombre o identificador del experto (opcional).",
+            "default": ""
+          },
+          "imagen": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "Imagen"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id_observacion",
+          "especie_confirmada",
+          "imagen"
+        ],
+        "title": "Body_feedback_feedback_post"
+      },
+      "Body_predict_predict_post": {
+        "properties": {
+          "id_observacion": {
+            "type": "string",
+            "title": "Id Observacion",
+            "description": "Identificador de la observación."
+          },
+          "imagen": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "Imagen",
+            "description": "Foto en JPEG, PNG o WEBP."
+          }
+        },
+        "type": "object",
+        "required": [
+          "id_observacion",
+          "imagen"
+        ],
+        "title": "Body_predict_predict_post"
+      },
+      "Body_predict_visual_predict_visual_post": {
+        "properties": {
+          "id_observacion": {
+            "type": "string",
+            "title": "Id Observacion"
+          },
+          "imagen": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "Imagen"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id_observacion",
+          "imagen"
+        ],
+        "title": "Body_predict_visual_predict_visual_post"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "PeticionUrl": {
+        "properties": {
+          "id_observacion": {
+            "type": "string",
+            "title": "Id Observacion"
+          },
+          "url_imagen": {
+            "type": "string",
+            "title": "Url Imagen",
+            "description": "URL https de la imagen en un almacenamiento permitido."
+          }
+        },
+        "type": "object",
+        "required": [
+          "id_observacion",
+          "url_imagen"
+        ],
+        "title": "PeticionUrl"
+      },
+      "RespuestaFeedback": {
+        "properties": {
+          "estado": {
+            "type": "string",
+            "const": "almacenado",
+            "title": "Estado"
+          },
+          "id_observacion": {
+            "type": "string",
+            "title": "Id Observacion"
+          },
+          "sha256": {
+            "type": "string",
+            "title": "Sha256"
+          },
+          "especie_confirmada": {
+            "type": "string",
+            "title": "Especie Confirmada"
+          },
+          "caja_del_modelo": {
+            "type": "boolean",
+            "title": "Caja Del Modelo",
+            "description": "True si la etiqueta incluye una caja propuesta por el modelo."
+          },
+          "requiere_revision_caja": {
+            "type": "boolean",
+            "title": "Requiere Revision Caja"
+          }
+        },
+        "type": "object",
+        "required": [
+          "estado",
+          "id_observacion",
+          "sha256",
+          "especie_confirmada",
+          "caja_del_modelo",
+          "requiere_revision_caja"
+        ],
+        "title": "RespuestaFeedback"
+      },
+      "RespuestaIdentificacion": {
+        "properties": {
+          "id_observacion": {
+            "type": "string",
+            "title": "Id Observacion"
+          },
+          "especie_propuesta": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Especie Propuesta",
+            "description": "Nombre de la clase; null si no hubo detección."
+          },
+          "confianza": {
+            "type": "number",
+            "title": "Confianza",
+            "description": "Confianza de la detección propuesta (0 a 1)."
+          },
+          "umbral_minimo": {
+            "type": "number",
+            "title": "Umbral Minimo",
+            "description": "Umbral del contrato; por debajo de él el estado es no_concluyente."
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "identificado",
+              "no_concluyente"
+            ],
+            "title": "Estado"
+          },
+          "version_modelo": {
+            "type": "string",
+            "title": "Version Modelo",
+            "description": "Versión del modelo que produjo la respuesta (nombre + hash corto de los pesos)."
+          },
+          "tiempo_inferencia_ms": {
+            "type": "number",
+            "title": "Tiempo Inferencia Ms",
+            "description": "Tiempo de inferencia del modelo en el servidor, en milisegundos."
+          }
+        },
+        "type": "object",
+        "required": [
+          "id_observacion",
+          "confianza",
+          "umbral_minimo",
+          "estado",
+          "version_modelo",
+          "tiempo_inferencia_ms"
+        ],
+        "title": "RespuestaIdentificacion",
+        "example": {
+          "confianza": 0.9132,
+          "especie_propuesta": "Hypanus_guttatus",
+          "estado": "identificado",
+          "id_observacion": "obs-0001",
+          "tiempo_inferencia_ms": 142.3,
+          "umbral_minimo": 0.7,
+          "version_modelo": "yolov8n-identimar-1.0.0+3fa9c01b22de"
+        }
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

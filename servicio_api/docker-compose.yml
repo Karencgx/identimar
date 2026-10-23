@@ -1,0 +1,18 @@
+services:
+  identimar-vision:
+    build: .
+    image: identimar-vision:1.0.0
+    container_name: identimar-vision
+    ports:
+      - "8000:8000"
+    environment:
+      API_KEY: ${API_KEY:-}                 # defínala en un archivo .env (ver README)
+      UMBRAL_CONFIANZA: "0.70"
+      # ALLOWED_IMAGE_HOSTS: "almacen.ejemplo.com"   # habilita /predict/url solo para estos hosts
+    volumes:
+      - ./models:/models:ro                 # aquí va pesos/best.pt del modelo congelado
+      - feedback_data:/data/feedback        # observaciones validadas (ver README para exportarlas)
+    restart: unless-stopped
+
+volumes:
+  feedback_data:
