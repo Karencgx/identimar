@@ -146,9 +146,6 @@ No active "instancias mínimas": mantener una instancia encendida consume la cuo
 | `MAX_UPLOAD_MB` / `MAX_PIXELS` | `10` / `50000000` | Límites de tamaño |
 | `FEEDBACK_DIR` | `/data/feedback` | Dónde se guarda el feedback |
 | `ALLOWED_IMAGE_HOSTS` | vacía | Hosts permitidos para `/predict/url` (separados por coma); vacía = deshabilitado |
-| `HF_TOKEN` | vacía | Token de Hugging Face (permiso de lectura/escritura solo sobre sus dos repositorios privados) |
-| `HF_MODEL_REPO` / `HF_MODEL_FILE` / `HF_MODEL_REVISION` | vacías / `best.pt` / vacía | Si el modelo no está en disco, se descarga al arrancar desde este repositorio PRIVADO (la revisión fija el commit exacto) |
-| `HF_FEEDBACK_REPO` | vacía | Dataset PRIVADO donde se sube cada observación de `/feedback` (el disco de un Space gratuito se borra al reiniciar) |
 
 ## Referencias a almacenamiento (Supabase)
 
