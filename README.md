@@ -4,6 +4,7 @@ Reconocimiento de cuatro especies de rayas del Urabá antioqueño con YOLOv8, em
 Proyecto Integrador I · Ingeniería de Sistemas · Universidad de Antioquia · Grupo 9.
 
 **Equipo:** Andrés Camilo Areiza Londoño · Karen Cardona Gutiérrez · Juan Pablo Valencia Martínez · Sebastián Flórez Jaramillo 
+
 **Profesor:** David S. Fernández Mc Cann
 
 ## Qué hay en este repositorio
