@@ -173,14 +173,13 @@ python scripts/probar_api.py --url http://localhost:8000 --carpeta ./fotos_exter
 `probar_api.py` imprime la respuesta de cada imagen, la latencia (ida y vuelta y de inferencia, con mediana y p95) y guarda
 `resultados_api.csv`: sirve de evidencia para la prueba de integración.
 
-## A acordar con el Equipo 3
+## Consideraciones de integración con el backend
 
-1. **Cómo llega la imagen:** archivo (`/predict`) o referencia a almacenamiento (`/predict/url`, requiere acordar los hosts permitidos).
-2. **`especie_propuesta = null`** cuando no hay detección (el contrato original dice string).
-3. **Errores del servicio:** ante una falla de inferencia se responde 5xx (no `no_concluyente`), para que el backend reintente o registre el fallo.
-4. **API key compartida** y red privada o HTTPS entre backend y servicio.
-5. **Tiempo de espera:** la primera petición tras arrancar puede tardar más (el modelo se calienta al inicio, pero conviene un timeout holgado).
-6. **Nombres de especie en `/feedback`:** exactamente los de `/health` → `modelo.clases`.
+1. **Envío de imágenes:** el servicio recibe una URL firmada temporal de Supabase Storage mediante `POST /predict/url`. La URL tiene una duración de 10 minutos.
+2. **Errores del servicio:** el backend contempla el código HTTP `503 SERVICIO_VISION_NO_DISPONIBLE` cuando el modelo de visión no responde.
+3. **Autenticación y seguridad:** las solicitudes del backend al servicio de visión utilizan el encabezado `x-api-key` con una clave secreta compartida entre los equipos 2 y 3. Todos los servicios utilizan HTTPS.
+4. **Prevención de *cold starts*:** UptimeRobot realiza solicitudes periódicas cada 5 minutos al backend y al modelo de visión para evitar tiempos de arranque en frío en Render y Google Cloud Run.
+5. **Nombres de especies en `/feedback`:** el campo `especie_confirmada` utiliza los identificadores del catálogo taxonómico unificado, compartidos entre el backend y el modelo de visión.
 
 ## Limitaciones conocidas
 
