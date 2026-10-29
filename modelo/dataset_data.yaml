@@ -5,7 +5,7 @@ names:
 - Styracura_schmardae
 nc: 4
 roboflow:
-  license: CC BY 4.0
+  license: CC BY NC SA 4.0
   project: identimar-rayas
   url: https://universe.roboflow.com/karen-cardona-gutierrez/identimar-rayas/dataset/2
   version: 2
