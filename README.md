@@ -12,7 +12,7 @@ Proyecto Integrador I · Ingeniería de Sistemas · Universidad de Antioquia · 
 | Carpeta | Contenido |
 |---|---|
 | `servicio_api/` | API REST (FastAPI + Docker): `/predict`, `/especies`, `/health`, `/demo`, `/feedback`. Incluye pruebas, scripts de apoyo y la configuración de despliegue en Google Cloud Run. Ver su `README.md`. |
-| `entrenamiento/` | Scripts del cierre del modelo (métricas, matriz de confusión, ficha y versionado) y del sobremuestreo. Aquí va el notebook de entrenamiento. |
+| `entrenamiento/` | Scripts del cierre del modelo (métricas, matriz de confusión, ficha y versionado) y del sobremuestreo. |
 | `modelo/` | Ficha y resultados del modelo definitivo (V7): métricas, matrices, curvas e hiperparámetros. |
 | `docs/` | Contrato de integración, informe de avance, inventario del dataset y diagramas. |
 
@@ -39,7 +39,7 @@ Despliegue en Cloud Run y variables de entorno: ver `servicio_api/README.md`.
 
 ## Cómo reproducir el entrenamiento
 
-1. Dataset: proyecto de Roboflow `IdentiMar-Rayas`, versión 2 (confirmar en `modelo/FICHA_MODELO.md`). Las imágenes no se incluyen por sus licencias; el inventario con procedencia va en `docs/`.
+1. Dataset: proyecto de Roboflow `IdentiMar-Rayas`, versión 2. Las imágenes no se incluyen por sus licencias; el inventario con procedencia está en `docs/`.
 2. Notebook: `entrenamiento/` (exportado desde Colab). Fijar `pip install ultralytics==8.4.170`.
 3. Sobremuestreo: `entrenamiento/sobremuestreo_idempotente.py` (3× solo para *P. magdalenae*, solo en `train`).
 4. Evaluación y congelado del modelo: `entrenamiento/cierre_modelo_final.py`.
