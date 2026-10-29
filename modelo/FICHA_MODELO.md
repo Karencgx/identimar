@@ -76,8 +76,28 @@ weight_decay: 0.0005
 }
 ```
 
-## Completar a mano
-- [ ] Enlace al repositorio y commit/tag de este modelo: 
-- [ ] Proyecto y versión de Roboflow (confirmar): 
-- [ ] Sobremuestreo aplicado (clase, copias por imagen, imágenes de origen): 
-- [ ] Responsable de la corrida: 
+## Sobremuestreo aplicado
+
+Se aplicó sobremuestreo a la clase `Potamotrygon_magdalenae` (ID: `2`).
+
+| Métrica | Valor |
+|---|---:|
+| Imágenes en *train* antes | 597 |
+| Imágenes originales con la clase | 93 |
+| Copias generadas por imagen | 3 |
+| Copias previas eliminadas | 0 |
+| Imágenes en *train* después | 876 |
+
+**Resultado:** se generaron 279 copias adicionales, aumentando el conjunto de entrenamiento de 597 a 876 imágenes.
+
+```python
+{
+    'clase': 'Potamotrygon_magdalenae',
+    'id_clase': 2,
+    'copias_previas_eliminadas': 0,
+    'train_antes': 597,
+    'originales_con_la_clase': 93,
+    'n_copias': 3,
+    'train_despues': 876
+}
+```
