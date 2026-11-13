@@ -16,6 +16,10 @@ Proyecto Integrador I · Ingeniería de Sistemas · Universidad de Antioquia · 
 | `modelo/` | Ficha y resultados del modelo definitivo (V7): métricas, matrices, curvas e hiperparámetros. |
 | `docs/` | Contrato de integración, informe de avance, inventario del dataset y diagramas. |
 
+## Despliegue del servicio
+
+El modelo se encuentra desplegado en Google Cloud Run: https://identimar-vision-1041648874347.us-central1.run.app
+
 ## Modelo definitivo (V7)
 
 YOLOv8n por transferencia de aprendizaje (COCO), sobremuestreo 3× de la clase *Potamotrygon magdalenae*, Ultralytics 8.4.170.
